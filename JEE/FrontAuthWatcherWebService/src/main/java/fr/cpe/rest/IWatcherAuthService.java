@@ -13,5 +13,5 @@ public interface IWatcherAuthService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	void authenticate (String login, String pwd);
+	String authenticate (String login, String pwd);
 }

@@ -1,6 +1,12 @@
 package fr.cpe.common;
 
 public class UserModel {
+
+	private String lastName;
+	private String surName;
+	private String login;
+	private String pwd;
+	private String role;
 	
 	public UserModel(String login, String pwd) {
 		this.lastName = "";
@@ -9,12 +15,6 @@ public class UserModel {
 		this.pwd = pwd;
 		this.role = "";
 	}
-
-	private String lastName;
-	private String surName;
-	private String login;
-	private String pwd;
-	private String role;
 	
 	// Getters & Setters
 	
