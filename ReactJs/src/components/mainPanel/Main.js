@@ -15,6 +15,7 @@ import Presentation from '../common/presentation/containers/Presentation';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import globalReducer from '../../reducers';
+import {updateContentMap} from '../../actions';
 const store = createStore(globalReducer);
 
 export default class Main extends React.Component{
@@ -25,6 +26,7 @@ export default class Main extends React.Component{
             slideMap:slideMapTmp,
             contentMap:contentMapTmp
         }
+        store.dispatch(updateContentMap(contentMapTmp));
     }
 
     render() {

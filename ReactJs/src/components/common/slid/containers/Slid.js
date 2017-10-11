@@ -12,14 +12,6 @@ class Slid extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {
-            id:this.props.id,
-            title:this.props.title,
-            txt:this.props.txt,
-            content:this.props.content,
-            contentMap:this.props.contentMap,
-            displayMode:this.props.displayMode
-        }
         this.getContentObject=this.getContentObject.bind(this);
         this.getDisplayRender=this.getDisplayRender.bind(this);
         this.handleChangeTitle=this.handleChangeTitle.bind(this);
@@ -124,4 +116,11 @@ class Slid extends React.Component{
     }
 }
 
-export default connect()(Slid);
+const mapStateToProps = (state, ownProps) => {
+    return {
+        contentMap : state.updateModelReducer.content_map
+    }
+};
+
+
+export default connect(mapStateToProps)(Slid);

@@ -36,7 +36,7 @@ class EditSlidPanel extends Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        selected_slid: state.selectedReducer.slid
+        selected_slid : state.selectedReducer.slid
     }
 };
 

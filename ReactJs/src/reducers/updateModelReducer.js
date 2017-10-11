@@ -8,7 +8,10 @@ const updateModelReducer = (state={presentation:{},content_map:{}},action) => {
         case 'UPDATE_PRESENTATION_SLIDS':
             return;
         case 'UPDATE_CONTENT_MAP':
-            return;
+            const newState3={
+                content_map : action.obj
+            }; 
+            return newState3;
         case 'ADD_CONTENT':
             return;
         default:
