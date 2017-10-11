@@ -6,6 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import fr.cpe.common.UserModel;
+
 @Path("/WatcherAuth")
 public interface IWatcherAuthService {
 	
@@ -13,5 +15,5 @@ public interface IWatcherAuthService {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	String authenticate (String login, String pwd);
+	String authenticate (UserModel userLogin);
 }
