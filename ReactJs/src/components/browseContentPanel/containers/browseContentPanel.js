@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Content from '../../common/content/container/Content';
 
-export default class BrowseContentPanel extends Component {
+class BrowseContentPanel extends Component {
     //class constructor whith given properties
     constructor(props) {
         super(props);
@@ -59,8 +60,11 @@ export default class BrowseContentPanel extends Component {
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        contentlists : state.updateModelReducer.content_map
+    }
+};
 
-// export default connect(mapStateToProps)(MiddleSide);
+export default connect(mapStateToProps)(BrowseContentPanel);
 
-//export the current classes in order to be used outside
-// export default BrowseContentPanel;

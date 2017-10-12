@@ -17,12 +17,12 @@ export default class SlidList extends React.Component{
     getAllSlideRender(){
         let array_render=[];
         
-            if (this.state.slidArray === undefined)
+            if (this.props.slidArray === undefined)
                 return ;
             
-            let slidListLength = Object.keys(this.state.slidArray).length;    
+            let slidListLength = Object.keys(this.props.slidArray).length;    
             for(var i=0;i<slidListLength;i++){
-                let obj = this.state.slidArray[i];
+                let obj = this.props.slidArray[i];
                 array_render.push(
                     <Slid
                         key={obj.id}
@@ -30,7 +30,7 @@ export default class SlidList extends React.Component{
                         title={obj.title}
                         txt={obj.txt}
                         content={obj.content_id}
-                        contentMap={this.state.contentMap}
+                        contentMap={this.props.contentMap}
                         displayMode="SHORT"
                     />
                 );

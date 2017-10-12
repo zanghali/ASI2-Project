@@ -46,7 +46,7 @@ export default class Visual extends React.Component{
         }
 
         //Check if we need all data
-        if(this.state.onlyContent){
+        if(this.props.onlyContent){
             result = (
                 <div className="card bg-light" style={{width:'100%'}}>
                     {content}
