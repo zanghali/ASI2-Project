@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import SlidList from '../components/SlidList';
 import EditMetaPres from '../components/EditMetaPres';
 
 import './presentation.css';
 
-export default class Presentation extends React.Component{
+class Presentation extends React.Component{
 
     constructor(props) {
         super(props);
@@ -33,16 +34,23 @@ export default class Presentation extends React.Component{
         return (
             <div>
                 <EditMetaPres
-                    title={this.state.title}
-                    description={this.state.description}
+                    title={this.props.presentation.title}
+                    description={this.props.presentation.description}
                     handleChangeTitle={this.handleChangeTitle}
                     handleChangeDescription={this.handleChangeDescription}
                 />
                 <SlidList
-                    slidArray={this.state.slidArray}
-                    contentMap={this.state.contentMap}
+                    slidArray={this.props.presentation.slidArray}
                 />
             </div>    
         );
     }
 }
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        presentation : state.updateModelReducer.presentation
+    }
+};
+
+export default connect(mapStateToProps)(Presentation);

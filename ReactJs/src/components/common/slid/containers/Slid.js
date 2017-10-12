@@ -20,11 +20,11 @@ class Slid extends React.Component{
     }
 
     handleChangeTitle(e){
-        this.setState({title:e.target.value});
+        this.props.updateSlid(this.props.id,e.target.value,this.props.txt,this.props.content);
     }
 
     handleChangeTxt(e){
-        this.setState({txt:e.target.value});
+        this.props.updateSlid(this.props.id,this.props.title,e.target.value,this.props.content);
     }
 
     updateSelectedSlid(){
