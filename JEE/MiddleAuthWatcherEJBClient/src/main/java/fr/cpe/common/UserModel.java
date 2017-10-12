@@ -10,7 +10,7 @@ public class UserModel implements Serializable{
 	private String surName;
 	private String login;
 	private String pwd;
-	private String role;
+	private Role role;
 
 	public UserModel() {
 		super();
@@ -21,9 +21,9 @@ public class UserModel implements Serializable{
 		this.surName = "";
 		this.login = login;
 		this.pwd = pwd;
-		this.role = "";
+		this.role = null;
 	}
-
+	
 	// Getters & Setters
 
 	public String getLastName() {
@@ -58,17 +58,16 @@ public class UserModel implements Serializable{
 		this.pwd = pwd;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
 	@Override
 	public String toString() {
-		return "UserModel [lastName=" + lastName + ", surName=" + surName + ", login=" + login + ", pwd=" + pwd
-				+ ", role=" + role + "]";
+		return "UserModel [login=" + login + ", pwd=" + pwd + ", role=" + role + "]";
 	}
 }
