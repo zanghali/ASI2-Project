@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import SlidList from '../components/SlidList';
 import EditMetaPres from '../components/EditMetaPres';
+import {updatePresentation} from '../../../../actions';
 
 import './presentation.css';
 
@@ -22,11 +23,23 @@ class Presentation extends React.Component{
     }
 
     handleChangeTitle(e){
-        this.setState({title:e.target.value});
+        const tmpPres = {
+            id: this.props.presentation.id,
+            title: e.target.value,
+            description: this.props.presentation.description,
+            slidArray: this.props.presentation.slidArray
+        };
+        this.props.dispatch(updatePresentation(tmpPres));
     }
 
     handleChangeDescription(e){
-        this.setState({description:e.target.value});
+        const tmpPres = {
+            id: this.props.presentation.id,
+            title: this.props.presentation.title,
+            description: e.target.value,
+            slidArray: this.props.presentation.slidArray
+        };
+        this.props.dispatch(updatePresentation(tmpPres));
     }
 
     render() {
@@ -49,7 +62,8 @@ class Presentation extends React.Component{
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        presentation : state.updateModelReducer.presentation
+        presentation : state.updateModelReducer.presentation,
+        updated_slid : state.selectedReducer.slid
     }
 };
 

@@ -3,7 +3,7 @@ import React from 'react';
 import Slid from '../../slid/containers/Slid';
 
 
-export default class SlidList extends React.Component{
+class SlidList extends React.Component{
 
     constructor(props) {
         super(props);
@@ -13,6 +13,7 @@ export default class SlidList extends React.Component{
         }
         this.getAllSlideRender=this.getAllSlideRender.bind(this);
     }
+
 
     getAllSlideRender(){
         let array_render=[];
@@ -30,7 +31,6 @@ export default class SlidList extends React.Component{
                         title={obj.title}
                         txt={obj.txt}
                         content={obj.content_id}
-                        contentMap={this.props.contentMap}
                         displayMode="SHORT"
                     />
                 );
@@ -46,3 +46,6 @@ export default class SlidList extends React.Component{
         return display_list;
     }
 }
+
+
+export default SlidList;

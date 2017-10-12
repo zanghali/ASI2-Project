@@ -18,9 +18,11 @@ class EditSlidPanel extends Component{
             id: id,
             title: title,
             txt: txt,
-            content: content_id
+            content: content_id,
+            content_id: content_id
         };
         this.props.dispatch(updateSlid(tmpSlid));
+        this.props.updatePresentation(tmpSlid);
     }
 
     createSlid(){
