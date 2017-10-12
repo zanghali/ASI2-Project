@@ -13,6 +13,7 @@ import javax.jms.TextMessage;
 
 import fr.cpe.common.Role;
 import fr.cpe.common.UserModel;
+import fr.cpe.dao.UserDao;
 import fr.cpe.model.DataContainer;
 
 @MessageDriven(activationConfig = {
@@ -20,8 +21,10 @@ import fr.cpe.model.DataContainer;
 		@ActivationConfigProperty(propertyName = "destination", propertyValue = "java:/jms/watcherAuthJMS")})
 public class AuthWatcherMsgDrivenEJB implements MessageListener {
 
-	@EJB
-	private DataContainer dataContainer;
+//	@EJB
+//	private DataContainer dataContainer;
+    @EJB
+    UserDao userDao;
 
 	@EJB
 	MessageSenderQueueLocal sender;
@@ -47,10 +50,10 @@ public class AuthWatcherMsgDrivenEJB implements MessageListener {
 					System.out.println("login:" + user.getLogin());
 					System.out.println("pwd:" + user.getPwd());
 
-					Role currentTestRole = dataContainer.checkUser(user);
+					Role currentTestRole = userDao.checkUser(user);
 
 					if (currentTestRole != null) {
-						user.setRole(currentTestRole);
+						user.setRole(currentTestRole.name());
 					}
 					
 					sender.sendMessage(user);

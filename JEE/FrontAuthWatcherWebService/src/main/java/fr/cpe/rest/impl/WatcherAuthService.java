@@ -27,13 +27,15 @@ public class WatcherAuthService implements IWatcherAuthService {
 		
 		messageSenderLocal.sendMessage(user);
 		UserModel result = messageReceiverSyncLocal.receiveMessage();
-
+		
 		System.out.println(result);
 
+		// gérer le cas ou result est null
+		
 		JsonObject response = Json.createObjectBuilder()
 				.add("login", result.getLogin())
 				.add("validAuth", result.getRole() != null)
-				.add("role", (result.getRole() != null ? result.getRole().name() : ""))
+				.add("role", (result.getRole() != null ? result.getRole() : ""))
 				.build();
 		
 		return response.toString();

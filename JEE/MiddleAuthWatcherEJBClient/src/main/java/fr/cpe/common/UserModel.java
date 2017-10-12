@@ -2,15 +2,46 @@ package fr.cpe.common;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "users")
+
+@NamedQuery(name = "Users.list", query = "select u from UserModel u")
 public class UserModel implements Serializable{
-	
-	private static final long serialVersionUID = -8666021772284848686L;
-	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    
+    @NotNull
+    @Column(name = "lastName")
 	private String lastName;
+    
+    @NotNull
+    @Column(name = "surName")
 	private String surName;
+	
+    @NotNull
+    @Column(name = "login", unique = true)
 	private String login;
+    
+    @NotNull
+    @Column(name = "pwd", unique = true)
 	private String pwd;
-	private Role role;
+	
+    @NotNull
+    @Column(name = "role")
+	private String role;
 
 	public UserModel() {
 		super();
@@ -58,11 +89,11 @@ public class UserModel implements Serializable{
 		this.pwd = pwd;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

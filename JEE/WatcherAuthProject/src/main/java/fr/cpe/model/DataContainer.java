@@ -21,10 +21,10 @@ public class DataContainer {
 	public void init()
 	{		
 		UserModel admin = new UserModel("admin", "admin");
-		admin.setRole(Role.ADMIN);
+		admin.setRole(Role.ADMIN.name());
 		
 		UserModel client = new UserModel("jdoe", "jdoe");
-		client.setRole(Role.NONE);
+		client.setRole(Role.NONE.name());
 		
 		data.add(admin);
 		data.add(client);
@@ -44,7 +44,7 @@ public class DataContainer {
 		}
 		
 		if (existingUser != null) {
-			result = existingUser.getRole();
+			result = Role.valueOf(existingUser.getRole());
 		}
 		
 		return result;
