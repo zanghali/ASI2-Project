@@ -21,9 +21,8 @@ router.route('/contents')
 router.route('/contents/:contentId')
 	.get(contentController.read);
 
+
 router.param('contentId', function(req, res, next, id) {
 	req.contentId = id;
 	next();
 });
-
-

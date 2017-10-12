@@ -10,6 +10,8 @@ var http = require("http");
 var path = require("path");
 var fs = require("fs");
 var bodyParser =  require("body-parser");
+var io = require('socket.io');
+
 
 var defaultRoute = require("./app/routes/default.route.js");
 var contentRoute = require("./app/routes/content.route.js");
@@ -92,7 +94,7 @@ app.get("/loadPres", function(request, response) {
 	});
 });
 
-//mettre la fonction dans app.get ??
+
 function filterJson(files)
 {
 
@@ -102,28 +104,6 @@ function filterJson(files)
 	}
 	
 }
-
-
-app.get("/savePres2", function(request, response){
-
-	request.on('data', function(data){
-
-		data = JSON.parse(data);
-		var fileName = data.id + ".pres.json";
-
-		fs.writeFile(path.join(CONFIG.presentationDirectory,fileName), data, 'utf8', function (err){
-			if(!!err)
-			{
-				console.error(err);
-				return;
-			}
-			console.log("File saved bis"); 
-		});
-	})
-
-});
-
-
 
 
 app.post("/savePres", function(request, response){
@@ -150,10 +130,12 @@ app.post("/savePres", function(request, response){
 
 
 
+app.use("/admin", express.static(path.join(__dirname, "/public/admin")));
+
+app.use("/watch", express.static(path.join(__dirname, "/public/watch")));
 
 
-
-//Controller.listen(server);
+IOController.listen(server);
 
 
 

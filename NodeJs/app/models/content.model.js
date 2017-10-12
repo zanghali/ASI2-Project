@@ -48,20 +48,7 @@ ContentModel.create =  function(content, callback){
 	/////////////
 	if(content.id === null ){
 		return callback(new Error('content.id is not defined'));
-	}else if (content.fileName === null){
-		return callback(new Error('content.fileName is not defined'));
-	}
-	////////////
-
-	//enregistre content.data
-	fs.writeFile(utils.getDataFilePath(content.fileName), content.getData(), 'utf8', function (err){
-		if(!!err)
-		{
-			console.error(err.message);
-			return callback(err);
-		}
-		
-		console.log("file content created");
+	}else if (content.fileName === null && content.getData() === null){
 
 		//enregitre les meta-données
 		fs.writeFile(utils.getMetaFilePath(content.id), JSON.stringify(content), 'utf8', function (err){
@@ -76,8 +63,32 @@ ContentModel.create =  function(content, callback){
 			callback(null);
 
 		});
-	});
+	}else{
+		//enregistre content.data
+		fs.writeFile(utils.getDataFilePath(content.fileName), content.getData(), 'utf8', function (err){
+			if(!!err)
+			{
+				console.error(err.message);
+				return callback(err);
+			}
+			
+			console.log("file content created");
 
+			//enregitre les meta-données
+			fs.writeFile(utils.getMetaFilePath(content.id), JSON.stringify(content), 'utf8', function (err){
+				if(!!err)
+				{
+					console.error(err);
+					return callback(err);
+				}
+
+				console.log("file meta data created");
+
+				callback(null);
+
+			});
+		});
+	}
 
 }
 

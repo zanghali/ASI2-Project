@@ -3,7 +3,7 @@
 
 var fs = require('fs');
 var CONFIG = require("../../configMac.json");
-
+var path = require("path");
 
 var utils = require('../utils/utils.js');
 var ContentModel = require("../models/content.model.js");
@@ -14,7 +14,7 @@ this.list = function(req, res) {
 
         if (!!err) {
             console.error(err);
-            return callback(err);
+            return res.status(500).end(err.message);
         }
 
         files = files.filter(filterJson);
@@ -23,30 +23,35 @@ this.list = function(req, res) {
 
         var maList = {};
 
-        files.forEach(function(fileName) {
+        if (files.length === 0){
+            return res.end("no files in the folder");
+        }else {
+            files.forEach(function(fileName) {
 
-            ContentModel.read(fileName.id, function(err, file) {
+                utils.readFileIfExists(path.join('uploads',fileName),function(err, file){
+                    compteur++;
+                    if (!!err)
+                    {
+                        console.error(err);
+                        return res.status(500).end(err.message);
+                    }
 
-                compteur++;
 
-                if (!!err) {
-                    console.error(err);
-                    return callback(err);
-                }
+                    var jsonFile = JSON.parse(file);
+                    var id = jsonFile.id;
 
+                    maList[id]=jsonFile;
 
-                var jsonData = JSON.parse(file);
-                var id = jsonData.id;
+                    if (compteur === files.length){
+                        res.end(JSON.stringify(maList));
+                    }
+                   
 
-                maList[id] = jsonData;
-
-                if (files.length == compteur) {
-                    return callback(null, maList);
-                }
+                });
 
             });
-        });
-
+        }
+       
 
     });
 }
@@ -62,41 +67,74 @@ function filterJson(files) {
 
 this.create = function(req, res) {
 
+    if (req.body.type === 'img'){
 
-    utils.readFileIfExists(req.file.path, function(err, data) {
-        if (!!err) {
+        utils.readFileIfExists(req.file.path, function(err, data) {
+            if (!!err) {
+                console.error(err);
+                return res.status(500).end(err.message);
+            }
 
-        }
+            var model = new ContentModel();
+            model.setData(data);
+            model.type = req.body.type;
+            model.id = utils.generateUUID();
+            model.title = req.body.title;
+            model.fileName = utils.getNewFileName(model.id, req.file.originalname);
+            model.src = path.join("contents",model.fileName);
+
+            ContentModel.create(model, function(err) {
+                if (!!err) {
+                    console.error(err);
+                    return res.status(500).end(err.message);
+                } else {
+                    res.end(JSON.stringify(model));
+                }
+            });
+            
+        });
+    }else if (req.body.type === 'video'){
 
         var model = new ContentModel();
-        model.setData(data);
+
         model.type = req.body.type;
         model.id = utils.generateUUID();
         model.title = req.body.title;
-        model.fileName = utils.getNewFileName(model.id, req.file.originalname);
+        model.src = req.body.src;
 
-console.log(model);
         ContentModel.create(model, function(err) {
             if (!!err) {
                 console.error(err);
                 return res.status(500).end(err.message);
             } else {
-                res.end();
+                res.end(JSON.stringify(model));
             }
         });
-    })
+
+    }else{
+        return res.end("type is not defined");
+    }
+
+
+
 
 
 };
 
-this.read = function(id, callback) {
+this.read = function(req, res) {
 
-    ContentModel.read(id, function(err, data) {
-        if (err) {
+    ContentModel.read(req.contentId, function(err, data) {
+        if (!!err) {
             console.error(err);
-            return callback(err, data);;
+            return res.status(500).end(err.message);
         } else {
-            callback(null, data);
+            if(!!req.query.json){
+                res.end(JSON.stringify(data));
+            }else if(data.type === "img"){
+                res.sendFile(utils.getDataFilePath(data.fileName));
+            } else{
+                res.redirect(data.src);
+            }
         }
     });
 

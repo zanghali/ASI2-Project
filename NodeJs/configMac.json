@@ -1,5 +1,5 @@
 {
 	"port": 1337,
-	"contentDirectory": "uploads",
-	"presentationDirectory": "presentation_content"
+	"contentDirectory": "/Users/lothairelaeuffer/Documents/Etudes/5ETI/ASI2/ASI2-Project/NodeJs/uploads",
+	"presentationDirectory": "/Users/lothairelaeuffer/Documents/Etudes/5ETI/ASI2/ASI2-Project/NodeJs/presentation_content"
 }
