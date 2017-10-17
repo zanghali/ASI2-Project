@@ -63,7 +63,8 @@ class Presentation extends React.Component{
 const mapStateToProps = (state, ownProps) => {
     return {
         presentation : state.updateModelReducer.presentation,
-        updated_slid : state.selectedReducer.slid
+        updated_slid : state.selectedReducer.slid,
+        contentMap : state.updateModelReducer.content_map
     }
 };
 

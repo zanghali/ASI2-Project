@@ -1,4 +1,4 @@
-// var Tools = require('../services/Tools.js');
+var Tools = require('../services/Tools.js');
 
 const updateModelReducer = (state={presentation:{},content_map:{}},action) => {
 
@@ -18,7 +18,14 @@ const updateModelReducer = (state={presentation:{},content_map:{}},action) => {
             }; 
             return newState3;
         case 'ADD_CONTENT':
-            return;
+            const newId = Tools.generateUUID();
+            action.obj['id'] = newId;
+            let newState4 = {
+                presentation: state.presentation,
+                content_map : state.content_map
+            };
+            newState4.content_map[newId] = action.obj;
+            return newState4;
         default:
             return state;        
     }

@@ -28,7 +28,6 @@ class Slid extends React.Component{
     drop(ev){
         ev.preventDefault();
         let newContent = JSON.parse(ev.dataTransfer.getData("application/json"));
-        console.log(newContent.id);
         this.props.updateSlid(this.props.id,this.props.title,this.props.txt,newContent.id);
     }
 
@@ -52,10 +51,11 @@ class Slid extends React.Component{
     }
 
     getContentObject(id){
-        let contentListLength = Object.keys(this.props.contentMap).length;
+        let contentListKeys = Object.keys(this.props.contentMap)
+        let contentListLength = contentListKeys.length;
         for(var i=0;i<contentListLength;i++){
-            if(Number.parseInt(this.props.contentMap[i].id, 10) === Number.parseInt(id, 10)){
-                return this.props.contentMap[i];
+            if(Number.parseInt(this.props.contentMap[contentListKeys[i]].id, 10) === Number.parseInt(id, 10)){
+                return this.props.contentMap[contentListKeys[i]];
             }
         }
         return {};

@@ -20,7 +20,7 @@ export default class AddContentPanel extends React.Component{
             <FlatButton
               label="Add"
               primary={true}
-              onClick={this.props.handleOpen}
+              onClick={this.props.addContent}
             />,
             <FlatButton
               label="Cancel"
@@ -33,7 +33,7 @@ export default class AddContentPanel extends React.Component{
         <div> 
             <RaisedButton 
                 label="Add content"
-                fullWidth="true" 
+                fullWidth={true} 
                 onClick={this.props.handleOpen} />
             <Dialog
                 title="Add a new content"
@@ -45,14 +45,15 @@ export default class AddContentPanel extends React.Component{
                     <TextField
                         id="title"
                         hintText="Content name"
-                        fullWidth="true"
+                        fullWidth={true}
+                        onChange={this.props.handleChangeTitle}
                     />
                     
                     <SelectField
                         floatingLabelText="Content Type"
-                        value={this.props.value}
-                        onChange={this.props.handleChange}
-                        fullWidth="true"
+                        value={this.props.type}
+                        onChange={this.props.handleChangeType}
+                        fullWidth={true}
                     >
                         <MenuItem value="img" primaryText="Image" />
                         <MenuItem value="img_url" primaryText="Web Image" />
@@ -63,7 +64,8 @@ export default class AddContentPanel extends React.Component{
                     <TextField
                         id="url"
                         hintText="Content URL"
-                        fullWidth="true"
+                        fullWidth={true}
+                        onChange={this.props.handleChangeUrl}
                     />      
             </Dialog>
         </div>);

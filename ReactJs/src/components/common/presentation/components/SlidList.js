@@ -21,9 +21,10 @@ class SlidList extends React.Component{
             if (this.props.slidArray === undefined)
                 return ;
             
-            let slidListLength = Object.keys(this.props.slidArray).length;    
+            let slidListKeys = Object.keys(this.props.slidArray);
+            let slidListLength = slidListKeys.length;    
             for(var i=0;i<slidListLength;i++){
-                let obj = this.props.slidArray[i];
+                let obj = this.props.slidArray[slidListKeys[i]];
                 array_render.push(
                     <Slid
                         key={obj.id}

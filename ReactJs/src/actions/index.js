@@ -12,6 +12,13 @@ export const updateContentMap = (contentMap_obj) => {
     };
 };
 
+export const addContent = (content_obj) => {
+    return {
+        type: 'ADD_CONTENT',
+        obj: content_obj
+    }
+}
+
 export const updatePresentation = (presentation_obj) => {
     return {
         type: 'UPDATE_PRESENTATION',

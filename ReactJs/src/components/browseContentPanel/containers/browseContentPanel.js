@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Content from '../../common/content/container/Content';
-import AddContentPanel from '../components/AddContentPanel'
+import AddContentPanel from '../components/AddContentPanel';
+import {addContent} from '../../../actions';
 
 class BrowseContentPanel extends Component {
     //class constructor whith given properties
@@ -10,15 +11,27 @@ class BrowseContentPanel extends Component {
         super(props);
         this.state = {
             open:false,
-            value:"img"
+            type:"img"  
         };
         this.getAllContentRender=this.getAllContentRender.bind(this);
         this.getContentObject=this.getContentObject.bind(this);
         this.handleOpen=this.handleOpen.bind(this);
         this.handleClose=this.handleClose.bind(this);
-        this.handleChange=this.handleChange.bind(this);
+        this.handleChangeTitle=this.handleChangeTitle.bind(this);
+        this.handleChangeType=this.handleChangeType.bind(this);
+        this.handleChangeUrl=this.handleChangeUrl.bind(this);
+        this.addContent=this.addContent.bind(this);
     }
 
+    addContent = () => {
+        this.handleClose();
+        let newContent = {
+            title: this.state.title,
+            type: this.state.type,
+            src:this.state.url
+        };
+        this.props.dispatch(addContent(newContent));
+    };
     
     handleOpen = () => {
         this.setState({open: true});
@@ -28,8 +41,17 @@ class BrowseContentPanel extends Component {
         this.setState({open: false});
     };
 
-    handleChange = (event, index, value) => this.setState({value});
+    handleChangeType = (event, index, value) => {
+        this.setState({type: value});
+    }
 
+    handleChangeTitle = (ev) => {
+        this.setState({title: ev.target.value});
+    }
+
+    handleChangeUrl = (ev) => {
+        this.setState({url: ev.target.value});
+    }
     
     getContentObject(id){
         let contentListLength = Object.keys(this.props.contentlists).length;
@@ -47,10 +69,11 @@ class BrowseContentPanel extends Component {
         if (this.props.contentlists === undefined)
             return ;
         
-        let contentListLength = Object.keys(this.props.contentlists).length;    
+        let contentListKeys = Object.keys(this.props.contentlists);    
+        let contentListLength = contentListKeys.length;    
         for(var i=0;i<contentListLength;i++){
             // let obj = this.getPartObject(this.props.contentlists[i]);
-            let obj = this.props.contentlists[i];
+            let obj = this.props.contentlists[contentListKeys[i]];
             array_render.push(
                 <Content
                     key={obj.id}
@@ -77,10 +100,14 @@ class BrowseContentPanel extends Component {
 
                 <hr className="my-4" />
                 <AddContentPanel
+                    addContent={this.addContent}
                     handleOpen={this.handleOpen}
                     handleClose={this.handleClose}
-                    handleChange={this.handleChange}
+                    handleChangeTitle={this.handleChangeTitle}
+                    handleChangeType={this.handleChangeType}
+                    handleChangeUrl={this.handleChangeUrl}
                     open={this.state.open}
+                    type={this.state.type}
                 />
                 <div className="my-4" />
             </div>
