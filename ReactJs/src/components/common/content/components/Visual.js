@@ -23,19 +23,31 @@ export default class Visual extends React.Component{
             case 'img':
             case 'img_url':
                 content = (
-                    <img className="card-img-top" src={this.props.src} alt="" />
+                    <img 
+                        className="card-img-top"
+                        src={this.props.src}
+                        alt=""
+                        draggable="false"/>
                 );
                 break;
             case 'video':
                 content = (
-                    <object className="card-img-top" data={this.props.src}>
+                    <object 
+                        className="card-img-top"
+                        data={this.props.src}
+                        draggable="false">
                         Could not load the content
                     </object>    
                 );
                 break;
             case 'web':
                 content = (
-                    <iframe className="card-img-top" src={this.props.src} title="Web preview"></iframe>
+                    <iframe
+                        className="card-img-top"
+                        src={this.props.src}
+                        title="Web preview"
+                        draggable="false">
+                    </iframe>
                 );
                 break;
             default:
@@ -54,14 +66,7 @@ export default class Visual extends React.Component{
             );
         } else {
             result = (
-                // <div className="thumbnail">
-                //     <p>TITLE: {this.state.title}</p>
-                //     <p>id: {this.state.id}</p>
-                //     <p>SRC: {this.state.src}</p>
-                //     <p>TYPE: {this.state.type}</p>
-                //     {content}
-                // </div>
-                <div className="card bg-light mb-3" style={{width:'100%'}}>
+                <div className="card bg-light mb-3" style={{width:'100%'}} draggable="true" onDragStart={this.props.drag}>
                     {content}
                     <div className="card-body">
                         <h4 className="card-title">{this.props.title}</h4>

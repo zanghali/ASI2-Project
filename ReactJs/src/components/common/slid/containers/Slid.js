@@ -17,6 +17,19 @@ class Slid extends React.Component{
         this.handleChangeTitle=this.handleChangeTitle.bind(this);
         this.handleChangeTxt=this.handleChangeTxt.bind(this);
         this.updateSelectedSlid=this.updateSelectedSlid.bind(this);
+        this.allowDrop = this.allowDrop.bind(this);
+        this.drop = this.drop.bind(this);
+    }
+
+    allowDrop(ev){
+        ev.preventDefault();
+    }
+
+    drop(ev){
+        ev.preventDefault();
+        let newContent = JSON.parse(ev.dataTransfer.getData("application/json"));
+        console.log(newContent.id);
+        this.props.updateSlid(this.props.id,this.props.title,this.props.txt,newContent.id);
     }
 
     handleChangeTitle(e){
@@ -72,7 +85,7 @@ class Slid extends React.Component{
                 return slideRender;
             case "FULL_MNG":
                 slideRender = (
-                    <div onClick={()=>this.updateSelectedSlid()}>
+                    <div onDragOver={this.allowDrop} onDrop={this.drop}>
                         <div className="card bg-light mb-3">
                             <div className="card-body">
                                 <h2 className="card-title">{this.props.title}</h2>
