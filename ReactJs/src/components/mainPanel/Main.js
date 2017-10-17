@@ -35,24 +35,14 @@ export default class Main extends React.Component{
             <Provider store={store}>
                 <div className='container-fluid height-100'>
                     <div className="row height-100">
-                        <div className='col-md-3 col-lg-3 height-100 vertical-scroll'>
-                            <Presentation
-                                //id={this.state.slideMap.id}
-                                //title={this.state.slideMap.title}
-                                //description={this.state.slideMap.description}
-                                //slidArray={this.state.slideMap.slidArray}
-                                //contentMap={this.state.contentMap}
-                            />
+                        <div className='col-md-3 col-lg-3' style={{overflowY:"auto",maxHeight:"100vh"}}>
+                            <Presentation />
                         </div>
-                        <div className='col-md-6 col-lg-6 height-100'>
-                            <BrowsePresentationPanel
-                                //contentMap={this.state.contentMap}
-                            />
+                        <div className='col-md-6 col-lg-6' style={{overflowY:"auto",maxHeight:"100vh"}}>
+                            <BrowsePresentationPanel />
                         </div>
-                        <div className='col-md-3 col-lg-3 height-100 vertical-scroll'>
-                            <BrowseContentPanel 
-                                //contentlists={this.state.contentMap}
-                            />
+                        <div className='col-md-3 col-lg-3' style={{overflowY:"auto",maxHeight:"100vh"}}>
+                            <BrowseContentPanel />
                         </div>
                     </div>
                 </div>
