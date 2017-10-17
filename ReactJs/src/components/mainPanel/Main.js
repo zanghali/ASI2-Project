@@ -16,18 +16,49 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import globalReducer from '../../reducers';
 import { updateContentMap, updatePresentation} from '../../actions';
+
+var Comm = require('../../services/Comm.js');
 const store = createStore(globalReducer);
 
 export default class Main extends React.Component{
 
     constructor(props) {
         super(props);
+        this.comm = new Comm();
         this.state = {
             slideMap: slideMapTmp,
             contentMap: contentMapTmp
         }
         store.dispatch(updatePresentation(slideMapTmp));
         store.dispatch(updateContentMap(contentMapTmp));
+        
+        store.subscribe(() => {
+            this.setState({
+                contentMap : store.getState().updateModelReducer.content_map
+            });
+        });
+
+        //Binding
+        this.loadContentUpdate = this.loadContentUpdate.bind(this);
+        this.loadPresUpdate = this.loadPresUpdate.bind(this);
+        this.callbackErr = this.callbackErr.bind(this);
+
+        //Try to load for the first time
+        this.comm.loadContent(this.loadContentUpdate,this.callbackErr);
+        this.comm.loadPres(0,this.loadPresUpdate,this.callbackErr);
+
+    }
+
+    loadContentUpdate(data){
+        store.dispatch(updateContentMap(data));
+    }
+
+    loadPresUpdate(data){
+        store.dispatch(updatePresentation(data));
+    }
+
+    callbackErr(msg){
+        console.error(msg);
     }
 
     render() {

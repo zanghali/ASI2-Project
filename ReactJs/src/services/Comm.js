@@ -1,6 +1,6 @@
 
-var io =require('socket.io-client') ;
-var axios=require('axios') ;
+var io = require('socket.io-client') ;
+var axios = require('axios') ;
 
 class Comm{
     constructor(){
