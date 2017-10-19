@@ -49,3 +49,9 @@ this.getDataFilePath = function(fileName) {
 this.getNewFileName = function(id, originalFileName) {
 	return id + '.' + originalFileName.split('.').pop();
 }
+
+this.filterJson = function (files) {
+    if (path.extname(files) == '.json') {
+        return files;
+    }
+}

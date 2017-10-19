@@ -1,68 +1,53 @@
 "use strict";
 
-
 var fs = require('fs');
-var CONFIG = require("../../configMac.json");
 var path = require("path");
+
+var CONFIG = JSON.parse(process.env.CONFIG);
 
 var utils = require('../utils/utils.js');
 var ContentModel = require("../models/content.model.js");
 
+
 this.list = function(req, res) {
 
     fs.readdir(CONFIG.contentDirectory, function(err, files) {
-
         if (!!err) {
             console.error(err);
             return res.status(500).end(err.message);
         }
 
-        files = files.filter(filterJson);
+        //remove the files that are not .json
+        files = files.filter(utils.filterJson);
 
         var compteur = 0;
-
         var maList = {};
 
         if (files.length === 0){
             return res.end("no files in the folder");
         }else {
             files.forEach(function(fileName) {
-
                 utils.readFileIfExists(path.join('uploads',fileName),function(err, file){
                     compteur++;
-                    if (!!err)
-                    {
+                    if (!!err) {
                         console.error(err);
                         return res.status(500).end(err.message);
                     }
 
-
                     var jsonFile = JSON.parse(file);
-                    var id = jsonFile.id;
+                    maList[jsonFile.id]=jsonFile;
 
-                    maList[id]=jsonFile;
-
+                    //when we have all the files => send the list of files
                     if (compteur === files.length){
                         res.end(JSON.stringify(maList));
                     }
-                   
-
                 });
-
             });
         }
-       
-
     });
 }
 
-function filterJson(files) {
 
-    if (path.extname(files) == '.json') {
-        return files;
-    }
-
-}
 
 
 this.create = function(req, res) {

@@ -2,12 +2,12 @@
 <script>
 var socket = io();
 socket.on('connection', function(data){
-	socket.emit('data_com', socket.id);
+	
 	socket.on('currentSlidEvent', function(d){
 		console.log(d);
 		
 	});
+
+	socket.emit('data_com', socket.id);
 });
-
-
 </script>
