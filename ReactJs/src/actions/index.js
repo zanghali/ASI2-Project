@@ -39,3 +39,10 @@ export const savePres = () => {
         obj : 'SAVE_CMD'
     }
 }
+
+export const sendNavCmd = (command_obj) => {
+    return {
+        type: 'COMMAND_PRESENTATION',
+        obj: command_obj
+    }
+}

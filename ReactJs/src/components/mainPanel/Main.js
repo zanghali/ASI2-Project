@@ -47,12 +47,31 @@ export default class Main extends React.Component{
             if(store.getState().commandReducer.cmdPres === 'SAVE_CMD'){
                 this.comm.savPres(store.getState().updateModelReducer.presentation,this.callbackErr);
             }
+            if(store.getState().commandReducer.cmdPres === 'BEGIN'){
+                this.comm.begin();
+            }
+            if(store.getState().commandReducer.cmdPres === 'PREV'){
+                this.comm.backward();
+            }
+            if(store.getState().commandReducer.cmdPres === 'PLAY'){
+                this.comm.play();
+            }
+            if(store.getState().commandReducer.cmdPres === 'PAUSE'){
+                this.comm.pause();
+            }
+            if(store.getState().commandReducer.cmdPres === 'NEXT'){
+                this.comm.forward();
+            }
+            if(store.getState().commandReducer.cmdPres === 'END'){
+                this.comm.end();
+            }
 
         });
 
         //Try to load for the first time
         this.comm.loadContent(this.loadContentUpdate,this.callbackErr);
         this.comm.loadPres(0,this.loadPresUpdate,this.callbackErr);
+        this.comm.socketConnection(this.state.uuid);
 
     }
 

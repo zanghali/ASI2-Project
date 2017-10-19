@@ -85,6 +85,8 @@ class Presentation extends React.Component{
 
 
     handleAddSlide(){
+        console.log(this.state.slideTitle);
+        console.log(this.state.slideDescription);
         let tmpId = 100;
         const tmpPres = {
             id: this.props.presentation.id,
@@ -96,10 +98,10 @@ class Presentation extends React.Component{
             id:tmpId,
             title:this.state.slideTitle,
             txt:this.state.slideDescription,
-            content:1,
-            content_id:1
+            content:1
         };
-        tmpPres.slidArray.push({tmpId : tmpSlid});
+        tmpPres.slidArray.push(tmpSlid);
+        console.log(tmpPres.slidArray);
         this.props.dispatch(updatePresentation(tmpPres));
         this.handleAddClose();
     };

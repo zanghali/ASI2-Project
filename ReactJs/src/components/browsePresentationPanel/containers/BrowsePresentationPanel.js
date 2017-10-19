@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import EditSlidPanel from '../../editSlidPanel/containers/EditSlidPanel';
+import PresentationNavigation from '../../editSlidPanel/containers/PresentationNavigation';
+
 
 import { connect } from 'react-redux';
-import {updatePresentation} from '../../../actions';
+import {updatePresentation, sendNavCmd} from '../../../actions';
 
 class BrowsePresentationPanel extends Component{
     //class constructor whith given properties
@@ -10,8 +12,13 @@ class BrowsePresentationPanel extends Component{
         super(props);
         this.state = {};
         this.updatePresentation = this.updatePresentation.bind(this);
+        this.handleNav = this.handleNav.bind(this);
     }
     
+    handleNav(cmd){
+        cmd !== undefined ? this.props.dispatch(sendNavCmd(cmd)) : console.error('Error Cmd Nav');
+    }
+
     updatePresentation(newSlid){
         
         let newSlidArray = [];
@@ -52,6 +59,9 @@ class BrowsePresentationPanel extends Component{
         
         return (
             <div>
+                <PresentationNavigation 
+                    handleNav={this.handleNav}
+                />
                 <EditSlidPanel
                     updatePresentation={this.updatePresentation}
                 />

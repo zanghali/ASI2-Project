@@ -17,7 +17,7 @@ let Tools={}
 
 //Fonction fournie trop lente? plante parfois a l'exe
 Tools.generateUUID = function(){
-    return (Math.random()*10000)%10000
+    return (Math.random()*10000)%10000 //Peu de chance d'avoir plus de 10000 content sur le serveur...
 }
 
 

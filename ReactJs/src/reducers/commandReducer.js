@@ -5,6 +5,11 @@ const commandReducer = (state={cmdPres:{}},action) => {
                 cmdPres : action.obj
             };
             return newState1;
+        case 'COMMAND_PRESENTATION':
+            const newState2 = {
+                cmdPres : action.obj
+            }
+            return newState2;
         default:
             return state;    
     }

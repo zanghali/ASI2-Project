@@ -1,6 +1,8 @@
 import React from 'react';
 
-// import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardMedia, CardTitle} from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
+
 
 export default class Visual extends React.Component{
 
@@ -61,29 +63,38 @@ export default class Visual extends React.Component{
 
         //Check if we need all data
         if(this.props.onlyContent){
+            // result = (
+            //     <div className="card bg-light" style={{width:'100%'}}>
+            //         {content}
+            //     </div>
+            // );
             result = (
-                <div className="card bg-light" style={{width:'100%'}}>
-                    {content}
-                </div>
+                <Card>
+                    <CardMedia>
+                        {content}
+                    </CardMedia>
+                </Card>
             );
         } else {
-            result = (
-                <div className="card bg-light mb-3" style={{width:'100%'}} draggable="true" onDragStart={this.props.drag}>
-                    {content}
-                    <div className="card-body">
-                        <h4 className="card-title">{this.props.title}</h4>
-                        <p className="card-text">Source: {this.props.src}</p>
-                        <p className="card-text">Type: {this.props.type}</p>
-                    </div>
-                </div>
-            );
             // result = (
-            //     <Card style={{marginBottom:"10px"}}>
-            //         <CardMedia overlay={<CardTitle title={this.props.title} subtitle={this.props.src}/>}>
-            //             {content}
-            //         </CardMedia>
-            //     </Card>
+            //     <div className="card bg-light mb-3" style={{width:'100%'}} draggable="true" onDragStart={this.props.drag}>
+            //         {content}
+            //         <div className="card-body">
+            //             <h4 className="card-title">{this.props.title}</h4>
+            //             <p className="card-text">Source: {this.props.src}</p>
+            //             <p className="card-text">Type: {this.props.type}</p>
+            //         </div>
+            //     </div>
             // );
+            result = (
+                <Paper zDepth={2} style={{marginBottom:"10px"}}>
+                    <Card draggable="true" onDragStart={this.props.drag}>
+                        <CardMedia overlay={<CardTitle title={this.props.title} subtitle={this.props.src}/>}>
+                            {content}
+                        </CardMedia>
+                    </Card>
+                </Paper>
+            );
 
 
         }
