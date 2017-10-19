@@ -5,6 +5,7 @@ socket.on('connection', function(data){
 	socket.emit('data_com', socket.id);
 	socket.on('currentSlidEvent', function(d){
 		console.log(d);
+		
 	});
 });
 

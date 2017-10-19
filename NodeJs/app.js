@@ -48,10 +48,10 @@ server.listen(CONFIG.port, function() {
 app.use("/index", express.static(path.join(__dirname, "/public")));
 
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended: true
-}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({
+// 	extended: true
+// }));
 
 app.use(defaultRoute);
 app.use(contentRoute);
@@ -92,18 +92,22 @@ app.get("/loadPres", function(request, response) {
 			});
 		});
 	});
+
+	function filterJson(files)
+	{
+
+		if(path.extname(files)=='.json')
+		{
+			return files;
+		}
+		
+	}
+
+
 });
 
 
-function filterJson(files)
-{
 
-	if(path.extname(files)=='.json')
-	{
-		return files;
-	}
-	
-}
 
 
 app.post("/savePres", function(request, response){
@@ -120,13 +124,12 @@ app.post("/savePres", function(request, response){
 				return;
 			}
 			console.log("File saved");
+			response.send("File saved");
 		});
 	})
 
 
 });
-
-
 
 
 
