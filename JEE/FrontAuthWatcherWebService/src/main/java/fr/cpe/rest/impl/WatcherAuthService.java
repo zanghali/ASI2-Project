@@ -24,19 +24,27 @@ public class WatcherAuthService implements IWatcherAuthService {
 	@Override
 	public String authenticate (UserModel userLogin) {
 		UserModel user = new UserModel(userLogin.getLogin(), userLogin.getPwd());
+		JsonObject response = null;
 		
 		messageSenderLocal.sendMessage(user);
 		UserModel result = messageReceiverSyncLocal.receiveMessage();
 		
 		System.out.println(result);
 
-		// gérer le cas ou result est null
-		
-		JsonObject response = Json.createObjectBuilder()
-				.add("login", result.getLogin())
-				.add("validAuth", result.getRole() != null)
-				.add("role", (result.getRole() != null ? result.getRole() : ""))
-				.build();
+		if (result == null) {
+			response = Json.createObjectBuilder()
+					.add("login", userLogin.getLogin())
+					.add("validAuth", false)
+					.add("role", "")
+					.build();
+		}
+		else {
+			response = Json.createObjectBuilder()
+					.add("login", result.getLogin())
+					.add("validAuth", result.getRole() != null)
+					.add("role", (result.getRole() != null ? result.getRole() : ""))
+					.build();
+		}
 		
 		return response.toString();
 	}

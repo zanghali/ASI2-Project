@@ -16,40 +16,40 @@ import java.util.List;
 @Stateless
 public class UserDao {
 
-    @PersistenceContext
-    EntityManager em;
+	@PersistenceContext
+	EntityManager em;
 
-    public void addUser(UserModel user) {
-        em.persist(user);
-    }
+	public void addUser(UserModel user) {
+		em.persist(user);
+	}
 
-    public List<UserModel> listUsers() {
-        List<UserModel> users = em.createNamedQuery("Users.list").getResultList();
+	public List<UserModel> listUsers() {
+		List<UserModel> users = em.createNamedQuery("Users.list").getResultList();
 
-        return users;
-    }
+		return users;
+	}
 
-    public List<UserModel> findUser(String login) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
+	public List<UserModel> findUser(String login, String pwd) {
+		CriteriaBuilder builder = em.getCriteriaBuilder();
 
-        CriteriaQuery<UserModel> crit = builder.createQuery(UserModel.class);
-        Root<UserModel> root = crit.from(UserModel.class);
-        crit.select(root)
-                .where(builder.like(builder.lower(root.get("login")), "%" + login.toLowerCase() + "%"));
+		CriteriaQuery<UserModel> crit = builder.createQuery(UserModel.class);
+		Root<UserModel> root = crit.from(UserModel.class);
+		crit.select(root).where(builder.like(builder.lower(root.get("login")), "%" + login.toLowerCase() + "%"),
+				builder.like(builder.lower(root.get("pwd")), "%" + pwd.toLowerCase() + "%"));
 
-        List<UserModel> users = em.createQuery(crit).getResultList();
+		List<UserModel> users = em.createQuery(crit).getResultList();
 
-        return users;
-    }
-    
+		return users;
+	}
+
 	public Role checkUser(UserModel user) {
 		Role result = null;
-		UserModel existingUser = findUser(user.getLogin()).get(0);
-		
+		UserModel existingUser = findUser(user.getLogin(), user.getPwd()).get(0);
+
 		if (existingUser != null) {
 			result = Role.valueOf(existingUser.getRole());
 		}
-		
+
 		return result;
 	}
 }
