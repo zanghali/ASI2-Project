@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+// import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 export default class Visual extends React.Component{
 

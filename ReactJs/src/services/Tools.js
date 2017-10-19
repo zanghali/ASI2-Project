@@ -24,7 +24,7 @@ Tools.generateUUID = function(){
 Tools.getNextSlidIndex= function(array,slidId){
     let index=-1;
     for(var i=0;i<array.length;i++){
-        if(slidId==array[i].id){
+        if(slidId===array[i].id){
             index=i;
             break;
         }
@@ -38,7 +38,7 @@ Tools.getNextSlidIndex= function(array,slidId){
 Tools.getPrevSlidIndex=function(array,slidId){
     let index=-1;
     for(var i=0;i<array.length;i++){
-        if(slidId==array[i].id){
+        if(slidId===array[i].id){
             index=i;
             break;
         }

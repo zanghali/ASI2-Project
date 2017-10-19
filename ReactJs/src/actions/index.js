@@ -32,3 +32,10 @@ export const updateSlid = (slid_obj) => {
         obj : slid_obj
     };
 };
+
+export const savePres = () => {
+    return {
+        type: 'SAVE_CMD',
+        obj : 'SAVE_CMD'
+    }
+}

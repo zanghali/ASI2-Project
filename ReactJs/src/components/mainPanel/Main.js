@@ -35,16 +35,20 @@ export default class Main extends React.Component{
         store.dispatch(updatePresentation(slideMapTmp));
         store.dispatch(updateContentMap(contentMapTmp));
         
-        store.subscribe(() => {
-            this.setState({
-                contentMap : store.getState().updateModelReducer.content_map
-            });
-        });
-
         //Binding
         this.loadContentUpdate = this.loadContentUpdate.bind(this);
         this.loadPresUpdate = this.loadPresUpdate.bind(this);
         this.callbackErr = this.callbackErr.bind(this);
+
+        store.subscribe(() => {
+            this.setState({
+                contentMap : store.getState().updateModelReducer.content_map
+            });
+            if(store.getState().commandReducer.cmdPres === 'SAVE_CMD'){
+                this.comm.savPres(store.getState().updateModelReducer.presentation,this.callbackErr);
+            }
+
+        });
 
         //Try to load for the first time
         this.comm.loadContent(this.loadContentUpdate,this.callbackErr);
