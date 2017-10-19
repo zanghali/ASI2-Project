@@ -87,7 +87,7 @@ export default class Visual extends React.Component{
             //     </div>
             // );
             result = (
-                <Paper zDepth={2} style={{marginBottom:"10px"}}>
+                <Paper zDepth={1} style={{marginBottom:"10px"}}>
                     <Card draggable="true" onDragStart={this.props.drag}>
                         <CardMedia overlay={<CardTitle title={this.props.title} subtitle={this.props.src}/>}>
                             {content}

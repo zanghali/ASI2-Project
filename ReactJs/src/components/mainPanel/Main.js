@@ -1,8 +1,8 @@
 import React from 'react';
-
 import './main.css';
-// import '../../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css';
+
 import '../../lib/bootstrap-4.0.0-beta/dist/css/bootstrap.min.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 import * as contentMapTmp from '../../source/contentMap.json';
 import * as slideMapTmp from '../../source/pres.json';
@@ -99,14 +99,14 @@ export default class Main extends React.Component{
                     </Paper>
                     <div className="container-fluid">
                         <div className="row">
-                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
-                                <Presentation />
+                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",overflowY:"hidden",maxHeight:"87vh"}}>
+                                    <Presentation />
                             </div>
-                            <div className='col-md-6 col-lg-6' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
-                                <BrowsePresentationPanel />
+                            <div className='col-md-6 col-lg-6' style={{overflowX:"hidden",overflowY:"hidden",maxHeight:"87vh"}}>
+                                    <BrowsePresentationPanel />
                             </div>
-                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
-                                <BrowseContentPanel />
+                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",maxHeight:"87vh"}}>
+                                    <BrowseContentPanel />
                             </div>
                         </div>
                     </div>

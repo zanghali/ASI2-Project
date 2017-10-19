@@ -1,30 +1,29 @@
 import React from 'react';
 
-import './editMetaSlid.css';
+import TextField from 'material-ui/TextField';
 
 export default class EditMetaSlid extends React.Component{
 
     render(){
 
         return(
-            <div className="form-group">
-                <label htmlFor="currentSlideTitle">Title</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="currentSlideTitle"
-                    onChange={this.props.handleChangeTitle}
+            <div>
+                <TextField
+                    hintText="Title"
+                    floatingLabelText="Title"
+                    fullWidth={true}
                     value={this.props.title}
+                    onChange={(event, newValue) => this.props.handleChangeTitle(newValue)}
                 />
-                <label htmlFor="currentSlideText">Text</label>
-                <textarea
-                    rows="5"
-                    type="text"
-                    className="form-control"
-                    id="currentSlideText"
-                    onChange={this.props.handleChangeTxt}
-                    value={this.props.txt}>
-                </textarea>
+                <TextField
+                    hintText="Text"
+                    floatingLabelText="Text"
+                    fullWidth={true}
+                    multiLine={true}
+                    rows={2}
+                    value={this.props.txt}
+                    onChange={(event, newValue) => this.props.handleChangeTxt(newValue)}
+                />
             </div>
         );
 

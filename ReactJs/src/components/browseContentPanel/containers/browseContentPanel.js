@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import ScrollBar from 'react-perfect-scrollbar';
+
 import Content from '../../common/content/container/Content';
 import AddContentPanel from '../components/AddContentPanel';
 import {addContent} from '../../../actions';
@@ -95,21 +97,24 @@ class BrowseContentPanel extends Component {
         
         return (
             <div>
-
-                {display_list}
-
-                <hr className="my-4" />
-                <AddContentPanel
-                    addContent={this.addContent}
-                    handleOpen={this.handleOpen}
-                    handleClose={this.handleClose}
-                    handleChangeTitle={this.handleChangeTitle}
-                    handleChangeType={this.handleChangeType}
-                    handleChangeUrl={this.handleChangeUrl}
-                    open={this.state.open}
-                    type={this.state.type}
-                />
-                <div className="my-4" />
+                <ScrollBar option={{wheelSpeed : 0.3, suppressScrollX : true}}>
+                    <div style={{height:"70vh",padding:"2px"}}>
+                        {display_list}
+                    </div>
+                </ScrollBar>    
+                <div style={{height:"13vh"}}>
+                    <hr className="my-4" />
+                    <AddContentPanel
+                        addContent={this.addContent}
+                        handleOpen={this.handleOpen}
+                        handleClose={this.handleClose}
+                        handleChangeTitle={this.handleChangeTitle}
+                        handleChangeType={this.handleChangeType}
+                        handleChangeUrl={this.handleChangeUrl}
+                        open={this.state.open}
+                        type={this.state.type}
+                    />
+                </div>
             </div>
         );
     }

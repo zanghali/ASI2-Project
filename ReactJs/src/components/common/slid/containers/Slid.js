@@ -1,9 +1,9 @@
 import React from 'react';
 
+import {Card, CardTitle, CardText} from 'material-ui/Card';
+
 import EditMetaSlid from '../components/EditMetaSlid';
 import Visual from '../../content/components/Visual';
-
-import './slid.css';
 
 import { connect } from 'react-redux';
 import {setSelectedSlid} from '../../../../actions';
@@ -31,12 +31,12 @@ class Slid extends React.Component{
         this.props.updateSlid(this.props.id,this.props.title,this.props.txt,newContent.id);
     }
 
-    handleChangeTitle(e){
-        this.props.updateSlid(this.props.id,e.target.value,this.props.txt,this.props.content);
+    handleChangeTitle(newValue){
+        this.props.updateSlid(this.props.id,newValue,this.props.txt,this.props.content);
     }
 
-    handleChangeTxt(e){
-        this.props.updateSlid(this.props.id,this.props.title,e.target.value,this.props.content);
+    handleChangeTxt(newValue){
+        this.props.updateSlid(this.props.id,this.props.title,newValue,this.props.content);
     }
 
     updateSelectedSlid(){
@@ -67,11 +67,45 @@ class Slid extends React.Component{
 
         switch(displayMode){
             case "SHORT":
+                // slideRender = (
+                //     <div className="card bg-light mb-3" onClick={(e)=>this.updateSelectedSlid()}>
+                //         <div className="card-body">
+                //             <h2 className="card-title">{this.props.title}</h2>
+                //             <h4 className="card-subtitle mb-4 text-muted">{this.props.txt}</h4>
+                //             <Visual
+                //                 id={contentObj.id}
+                //                 src={contentObj.src}
+                //                 type={contentObj.type}
+                //                 title={contentObj.title}
+                //                 onlyContent={true}
+                //             />
+                //         </div>
+                //     </div>
+                // );
                 slideRender = (
-                    <div className="card bg-light mb-3" onClick={(e)=>this.updateSelectedSlid()}>
-                        <div className="card-body">
-                            <h2 className="card-title">{this.props.title}</h2>
-                            <h4 className="card-subtitle mb-4 text-muted">{this.props.txt}</h4>
+                    <Card onClick={(e)=>this.updateSelectedSlid()} style={{marginBottom:10}}>
+                        <CardTitle 
+                            title={this.props.title}
+                            subtitle={this.props.txt}
+                        />
+                        <Visual
+                            id={contentObj.id}
+                            src={contentObj.src}
+                            type={contentObj.type}
+                            title={contentObj.title}
+                            onlyContent={true}
+                        />
+                    </Card>    
+                );
+                return slideRender;
+            case "FULL_MNG":
+                slideRender = (
+                    <div onDragOver={this.allowDrop} onDrop={this.drop}>
+                        <Card onClick={(e)=>this.updateSelectedSlid()} style={{marginBottom:10}}>
+                            <CardTitle 
+                                title={this.props.title}
+                                subtitle={this.props.txt}
+                            />
                             <Visual
                                 id={contentObj.id}
                                 src={contentObj.src}
@@ -79,37 +113,20 @@ class Slid extends React.Component{
                                 title={contentObj.title}
                                 onlyContent={true}
                             />
-                        </div>
-                    </div>
-                );
-                return slideRender;
-            case "FULL_MNG":
-                slideRender = (
-                    <div onDragOver={this.allowDrop} onDrop={this.drop}>
-                        <div className="card bg-light mb-3">
-                            <div className="card-body">
-                                <h2 className="card-title">{this.props.title}</h2>
-                                <h4 className="card-subtitle mb-4 text-muted">{this.props.txt}</h4>
-                                <Visual
-                                    id={contentObj.id}
-                                    src={contentObj.src}
-                                    type={contentObj.type}
-                                    title={contentObj.title}
-                                    onlyContent={true}
-                                />
-                            </div>
-                        </div>
-                        <div className="card bg-light mb-3" style={{width:'100%'}}>
-                            <div className="card-body">
-                                <h3 className="card-title">MetaData</h3>
+                        </Card>
+                        <Card>
+                            <CardTitle
+                                title="Metadata"
+                            />
+                            <CardText>
                                 <EditMetaSlid
                                     title={this.props.title}
                                     txt={this.props.txt}
                                     handleChangeTitle={this.handleChangeTitle}
                                     handleChangeTxt={this.handleChangeTxt}
                                 />
-                            </div>
-                        </div>
+                            </CardText>        
+                        </Card>
                     </div>
                 );
                 return slideRender;

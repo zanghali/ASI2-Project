@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import EditSlidPanel from '../../editSlidPanel/containers/EditSlidPanel';
 import PresentationNavigation from '../../editSlidPanel/containers/PresentationNavigation';
 
+import ScrollBar from 'react-perfect-scrollbar';
 
 import { connect } from 'react-redux';
 import {updatePresentation, sendNavCmd} from '../../../actions';
@@ -59,12 +60,18 @@ class BrowsePresentationPanel extends Component{
         
         return (
             <div>
-                <PresentationNavigation 
-                    handleNav={this.handleNav}
-                />
-                <EditSlidPanel
-                    updatePresentation={this.updatePresentation}
-                />
+                <div style={{height:"10vh"}}>
+                    <PresentationNavigation 
+                        handleNav={this.handleNav}
+                    />
+                </div>
+                <ScrollBar option={{wheelSpeed : 0.3, suppressScrollX : true}}>
+                    <div style={{height:"76vh",padding:"2px"}}>
+                        <EditSlidPanel
+                            updatePresentation={this.updatePresentation}
+                        />
+                    </div>
+                </ScrollBar>    
             </div>
         );
     }

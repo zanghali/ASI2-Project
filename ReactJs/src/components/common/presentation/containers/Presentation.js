@@ -8,6 +8,8 @@ import AddSlidePanel from '../components/AddSlidePanel';
 import DeleteSlidePanel from '../components/DeleteSlidePanel';
 import Snackbar from 'material-ui/Snackbar';
 
+import ScrollBar from 'react-perfect-scrollbar';
+
 import {updatePresentation, savePres, setSelectedSlid} from '../../../../actions';
 
 import './presentation.css';
@@ -120,21 +122,21 @@ class Presentation extends React.Component{
 
 
 
-    handleChangeTitle(e){
+    handleChangeTitle(newValue){
         const tmpPres = {
             id: this.props.presentation.id,
-            title: e.target.value,
+            title: newValue,
             description: this.props.presentation.description,
             slidArray: this.props.presentation.slidArray
         };
         this.props.dispatch(updatePresentation(tmpPres));
     }
 
-    handleChangeDescription(e){
+    handleChangeDescription(newValue){
         const tmpPres = {
             id: this.props.presentation.id,
             title: this.props.presentation.title,
-            description: e.target.value,
+            description: newValue,
             slidArray: this.props.presentation.slidArray
         };
         this.props.dispatch(updatePresentation(tmpPres));
@@ -144,20 +146,26 @@ class Presentation extends React.Component{
 
         return (
             <div>
-                <CommandButton 
-                    handleSnackOpen={this.handleSnackOpen}
-                    handleAddOpen={this.handleAddOpen}
-                    handleDeleteOpen={this.handleDeleteOpen}
-                />
-                <EditMetaPres
-                    title={this.props.presentation.title}
-                    description={this.props.presentation.description}
-                    handleChangeTitle={this.handleChangeTitle}
-                    handleChangeDescription={this.handleChangeDescription}
-                />
-                <SlidList
-                    slidArray={this.props.presentation.slidArray}
-                />
+                <div style={{height:"30vh"}}>
+                    <CommandButton 
+                        handleSnackOpen={this.handleSnackOpen}
+                        handleAddOpen={this.handleAddOpen}
+                        handleDeleteOpen={this.handleDeleteOpen}
+                    />
+                    <EditMetaPres
+                        title={this.props.presentation.title}
+                        description={this.props.presentation.description}
+                        handleChangeTitle={this.handleChangeTitle}
+                        handleChangeDescription={this.handleChangeDescription}
+                    />
+                </div>
+                    <ScrollBar option={{wheelSpeed : 0.3}}>
+                        <div style={{height:"55vh",padding:"2px"}}>
+                            <SlidList
+                                slidArray={this.props.presentation.slidArray}
+                            />
+                        </div>
+                    </ScrollBar>
                 <AddSlidePanel
                     handleAddSlide={this.handleAddSlide}
                     handleAddClose={this.handleAddClose}
