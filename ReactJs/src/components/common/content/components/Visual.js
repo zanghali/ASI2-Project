@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 export default class Visual extends React.Component{
 
     constructor(props) {
@@ -27,7 +29,7 @@ export default class Visual extends React.Component{
                         className="card-img-top"
                         src={this.props.src}
                         alt=""
-                        draggable="false"/>
+                        draggable="true"/>
                 );
                 break;
             case 'video':
@@ -35,7 +37,7 @@ export default class Visual extends React.Component{
                     <object 
                         className="card-img-top"
                         data={this.props.src}
-                        draggable="false">
+                        draggable="true">
                         Could not load the content
                     </object>    
                 );
@@ -46,7 +48,7 @@ export default class Visual extends React.Component{
                         className="card-img-top"
                         src={this.props.src}
                         title="Web preview"
-                        draggable="false">
+                        draggable="true">
                     </iframe>
                 );
                 break;
@@ -75,6 +77,15 @@ export default class Visual extends React.Component{
                     </div>
                 </div>
             );
+            // result = (
+            //     <Card style={{marginBottom:"10px"}}>
+            //         <CardMedia overlay={<CardTitle title={this.props.title} subtitle={this.props.src}/>}>
+            //             {content}
+            //         </CardMedia>
+            //     </Card>
+            // );
+
+
         }
 
         return result;

@@ -7,6 +7,9 @@ import '../../lib/bootstrap-4.0.0-beta/dist/css/bootstrap.min.css';
 import * as contentMapTmp from '../../source/contentMap.json';
 import * as slideMapTmp from '../../source/pres.json';
 
+import AppBar from 'material-ui/AppBar';
+import Paper from 'material-ui/Paper';
+
 import BrowseContentPanel from '../browseContentPanel/containers/browseContentPanel.js';
 import BrowsePresentationPanel from '../browsePresentationPanel/containers/BrowsePresentationPanel';
 import Presentation from '../common/presentation/containers/Presentation';
@@ -64,16 +67,24 @@ export default class Main extends React.Component{
     render() {
         return (
             <Provider store={store}>
-                <div className='container-fluid height-100'>
-                    <div className="row height-100">
-                        <div className='col-md-3 col-lg-3' style={{overflowY:"auto",maxHeight:"100vh"}}>
-                            <Presentation />
-                        </div>
-                        <div className='col-md-6 col-lg-6' style={{overflowY:"auto",maxHeight:"100vh"}}>
-                            <BrowsePresentationPanel />
-                        </div>
-                        <div className='col-md-3 col-lg-3' style={{overflowY:"auto",maxHeight:"100vh"}}>
-                            <BrowseContentPanel />
+                <div>
+                    <Paper zDepth={3} style={{marginBottom:"3vh"}}>    
+                        <AppBar
+                            title="Presentation"
+                            iconClassNameRight="muidocs-icon-navigation-expand-more"
+                        />
+                    </Paper>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
+                                <Presentation />
+                            </div>
+                            <div className='col-md-6 col-lg-6' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
+                                <BrowsePresentationPanel />
+                            </div>
+                            <div className='col-md-3 col-lg-3' style={{overflowX:"hidden",overflowY:"auto",maxHeight:"87vh"}}>
+                                <BrowseContentPanel />
+                            </div>
                         </div>
                     </div>
                 </div>
