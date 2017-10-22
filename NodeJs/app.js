@@ -91,6 +91,25 @@ app.get('/generateUUID', function (request, response){
 });
 
 
+app.post("/auth", function (req, res) {
+	var request = require('request');	// Simplified HTTP client
+	var data = req.body;	// Receive JSON {"login":"jdoe","pwd":"jdoepwd"} from ReactJs
+
+	// NodeJs to JEE FrontAuthWatcherWebService request options
+	var options = {
+		uri: 'http://localhost:8080/FrontAuthWatcherWebService/rest/WatcherAuth',
+		method: 'POST',
+		json: data
+	};
+
+	request(options, function (error, response) {
+		if (!error && response.statusCode == 200) {
+			res.send(response.body);	// JSON response from JEE sent to ReactJs
+		}
+	});
+});
+
+
 app.use("/admin", express.static(path.join(__dirname, "/public/admin")));
 
 app.use("/watch", express.static(path.join(__dirname, "/public/watch")));
