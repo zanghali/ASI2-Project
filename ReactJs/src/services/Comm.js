@@ -16,7 +16,7 @@ class Comm{
     }
     
     loadPres(presId,callback,callbackErr){
-     axios.get('/loadPres')
+     axios.get('http://localhost:1337/loadPres')
        .then(function (data) {
          var size = Object.keys(data.data).length;
          console.log("raw data");
@@ -38,7 +38,7 @@ class Comm{
     }
     
     loadContent(callback,callbackErr){
-     axios.get('/resources_list')
+     axios.get('http://localhost:1337/resources_list')
        .then(function (data) {
          //console.log("raw content data");
          //console.log(data.data);
@@ -59,7 +59,7 @@ class Comm{
     }
     
     savPres(presJson, callbackErr){
-        axios.post('/savePres', presJson)
+        axios.post('http://localhost:1337/savePres', presJson)
         .then(function (response) {
                 console.log(response);
             })
@@ -69,7 +69,7 @@ class Comm{
     }
     
     savContent(contentJson, callbackErr){
-        axios.post('/addContent', contentJson)
+        axios.post('http://localhost:1337/addContent', contentJson)
         .then(function (response) {
                 console.log(response);
             })
@@ -81,7 +81,7 @@ class Comm{
     fileUpload(fileC,callback,callbackErr){
          var data = new FormData();
          data.append('file', fileC);
-        axios.post('/file-upload', data)
+        axios.post('http://localhost:1337/file-upload', data)
         .then(function (response) {
                 console.log(response);
                 callback();
