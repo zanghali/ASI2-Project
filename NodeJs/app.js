@@ -1,13 +1,13 @@
 "use strict";
 
-var CONFIG = require("./configMac.json");
+var CONFIG = require("./config.json");
 process.env.CONFIG = JSON.stringify(CONFIG);
 
 var express = require("express");
 var http = require("http");
 var path = require("path");
 var fs = require("fs");
-var bodyParser =  require("body-parser");
+var bodyParser = require("body-parser");
 var io = require('socket.io');
 
 var utils = require("./app/utils/utils.js");
@@ -35,31 +35,46 @@ var server = http.createServer(app);
 
 app.use("/index", express.static(path.join(__dirname, "/public/admin")));
 
+app.use(function (req, res, next) {
+	// Website you wish to allow to connect
+	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+	// Request methods you wish to allow
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	// Request headers you wish to allow
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	// Set to true if you need the website to include cookies in the requests sent
+	// to the API (e.g. in case you use sessions)
+	res.setHeader('Access-Control-Allow-Credentials', true);
+	// Pass to next layer of middleware
+	next();
+});
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(defaultRoute);
 app.use(contentRoute);
 
 
-app.get("/loadPres", function(request, response) {
+app.get("/loadPres", function (request, response) {
 	var returnData = new Object();
-	fs.readdir(CONFIG.presentationDirectory, function(err, files){
-		if (!!err){
+	fs.readdir(CONFIG.presentationDirectory, function (err, files) {
+		if (!!err) {
 			console.error(err);
 			return;
 		}
 
-		files= files.filter(utils.filterJson);
-		var compteur=0;
+		files = files.filter(utils.filterJson);
+		var compteur = 0;
 
-		files.forEach(function(fileName){
-			fs.readFile(path.join(CONFIG.presentationDirectory, fileName), function (err, file){
+		files.forEach(function (fileName) {
+			fs.readFile(path.join(CONFIG.presentationDirectory, fileName), function (err, file) {
 				compteur++;
 
 				var jsonData = JSON.parse(file);
 				returnData[jsonData.id] = jsonData;
 
-				if (files.length == compteur){
+				if (files.length == compteur) {
 					response.send(returnData);
 				}
 			});
@@ -68,14 +83,14 @@ app.get("/loadPres", function(request, response) {
 
 });
 
-app.post("/savePres", function(request, response){
-	request.on('data', function(data){
+app.post("/savePres", function (request, response) {
+	request.on('data', function (data) {
 		data = JSON.parse(data);
 
 		var fileName = data.id + ".pres.json";
 
-		fs.writeFile(path.join(CONFIG.presentationDirectory,fileName), JSON.stringify(data), 'utf8', function (err){
-			if(!!err){
+		fs.writeFile(path.join(CONFIG.presentationDirectory, fileName), JSON.stringify(data), 'utf8', function (err) {
+			if (!!err) {
 				console.error(err);
 				return;
 			}
@@ -86,18 +101,15 @@ app.post("/savePres", function(request, response){
 
 });
 
-app.get('/generateUUID', function (request, response){
+app.get('/generateUUID', function (request, response) {
 	var newUUID = utils.generateUUID();
 	response.send(newUUID);
 });
 
 
 app.post("/auth", function (req, res) {
-
-	app.use(bodyParser.urlencoded({ extended: false }));
-	app.use(bodyParser.json());
-
 	var request = require('request');	// Simplified HTTP client
+	console.log(data);
 	var data = req.body;	// Receive JSON {"login":"jdoe","pwd":"jdoepwd"} from ReactJs
 
 	// NodeJs to JEE FrontAuthWatcherWebService request options
@@ -125,11 +137,11 @@ app.use("/test", express.static(path.join(__dirname, "/public/test")));
 IOController.listen(server);
 
 
-server.listen(CONFIG.port, function() {
+server.listen(CONFIG.port, function () {
 	var host = this.address().address;
 	var port = this.address().port;
 
-	console.log("App listening at http://%s:%s", host , port);
+	console.log("App listening at http://%s:%s", host, port);
 
 });
 

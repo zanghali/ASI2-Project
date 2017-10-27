@@ -60,16 +60,22 @@ export default class Login extends React.Component{
     startRequest = (jsonLogin,callback) => {
         axios.post('http://localhost:1337/auth' , jsonLogin )
         .then(function (response) {
-            response = JSON.parse(response);
+            console.log('test');
+            response = response.data;
+            console.log(response);
             if(response.validAuth !== true){
+                console.log('test2');
                 //TODO
                 return;
             }
             else{
+                console.log('test3');
                 callback(response.role);
+                return;
             }
         })
         .catch(function(error){
+            console.log("catch");
             alert(error);
             return;
         });
