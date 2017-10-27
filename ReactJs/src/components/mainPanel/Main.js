@@ -48,13 +48,14 @@ export default class Main extends React.Component{
                 this.comm.savPres(store.getState().updateModelReducer.presentation,this.callbackErr);
             }
             if(store.getState().commandReducer.cmdPres === 'BEGIN'){
+                console.log('HEY');
                 this.comm.begin();
             }
             if(store.getState().commandReducer.cmdPres === 'PREV'){
                 this.comm.backward();
             }
             if(store.getState().commandReducer.cmdPres === 'PLAY'){
-                this.comm.play();
+                this.comm.play(store.getState().updateModelReducer.presentation.id);
             }
             if(store.getState().commandReducer.cmdPres === 'PAUSE'){
                 this.comm.pause();
