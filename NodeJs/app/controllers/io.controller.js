@@ -70,7 +70,7 @@ this.listen = function (httpServer){
 					current_slid= current_pres.slidArray.length -1;
 				}
 
-				ContentModel.read(current_pres.slidArray[current_slid].contentMap[1], function(err,content){
+				ContentModel.read(current_pres.slidArray[current_slid].content_id, function(err,content){
 					Object.keys(socketList).map(function(key) {
 					    socketList[key].emit('currentSlidEvent', content);
 					});

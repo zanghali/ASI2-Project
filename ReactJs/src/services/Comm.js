@@ -104,7 +104,8 @@ class Comm{
     }
     
     socketConnection(uuid){
-        this.socket = io.connect(process.env.SOCKET_URL);
+        // this.socket = io.connect(process.env.SOCKET_URL);    
+        this.socket = io.connect("http://localhost:1337/socket.io");
         this.comm.io.uuid=uuid;
         this.socket.on('connection', message=>{ this.emitOnConnect(message)});
 
