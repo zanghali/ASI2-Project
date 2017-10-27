@@ -1,15 +1,23 @@
 "use strict";
 
 var io = require('socket.io');
+var fs = require("fs");
+var path = require("path");
+
+var CONFIG = JSON.parse(process.env.CONFIG);
 
 var ContentModel = require("../models/content.model.js");
 
+var contentController = require("../controllers/content.controller.js");
 
 this.listen = function (httpServer){
 
 	var ioServer=io(httpServer);
 
 	var socketList= {};
+
+	var current_pres=null;
+	var current_slid;
 
 	//new connection open
 	ioServer.on('connection', function(socket){
@@ -28,14 +36,41 @@ this.listen = function (httpServer){
 		});
 		//emit currentSlidEvent to all the socket
 		socket.on('slidEvent', function (data){
-			if(	data.CMD === 'START' || 
-				data.CMD === 'END' || 
-				data.CMD === 'BEGIN' || 
-				data.CMD === 'PREV' ||
-				data.CMD === 'NEXT' 
-				){
-				//load the content of the presentation data.PRES_ID
-				ContentModel.read(data.PRES_ID, function(err,content){
+
+			if(	data.CMD === 'START' ){
+
+				var fileName = data.PRES_ID + ".pres.json";
+				
+				fs.readFile(path.join(CONFIG.presentationDirectory, fileName), function (err, file){
+
+					current_pres=JSON.parse(file);
+					current_slid=0;
+					//load the content of the presentation data.PRES_ID
+					ContentModel.read(current_pres.slidArray[0].contentMap[1], function(err,content){
+						Object.keys(socketList).map(function(key) {
+						    socketList[key].emit('currentSlidEvent', content);
+						});
+					});
+					
+				});
+
+			}else if(current_pres !== null){
+				
+				if (data.CMD === 'NEXT' ){
+					if(current_slid !==current_pres.slidArray.length -1){
+						current_slid++;
+					}
+				}else if (data.CMD === 'PREV' ){
+					if(current_slid !== 0){
+						current_slid--;
+					}
+				}else if (data.CMD === 'BEGIN'){
+					current_slid=0;
+				}else if (data.CMD === 'END'){
+					current_slid= current_pres.slidArray.length -1;
+				}
+
+				ContentModel.read(current_pres.slidArray[current_slid].contentMap[1], function(err,content){
 					Object.keys(socketList).map(function(key) {
 					    socketList[key].emit('currentSlidEvent', content);
 					});
