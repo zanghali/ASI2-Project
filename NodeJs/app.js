@@ -1,6 +1,6 @@
 "use strict";
 
-var CONFIG = require("./configMAC.json");
+var CONFIG = require("./config.json");
 process.env.CONFIG = JSON.stringify(CONFIG);
 
 var express = require("express");
@@ -35,6 +35,8 @@ var server = http.createServer(app);
 
 app.use("/index", express.static(path.join(__dirname, "/public/admin")));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(defaultRoute);
 app.use(contentRoute);
